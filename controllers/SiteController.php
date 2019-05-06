@@ -17,6 +17,7 @@ use app\models\Vacancy;
 use app\models\Talking;
 use app\models\Coment;
 use app\models\User_content;
+use app\models\Product;
 use yii\data\Pagination;
 use yii\web\UploadedFile;
 
@@ -97,11 +98,13 @@ class SiteController extends Controller
         $user_one = User_fv::findOne($id);
        $contents = User_content::find()->where(['user_id'=> $id])->all();
        $vacancies = Vacancy::find()->where(['id_user'=> $id])->all();
+       $products = Product::find()->where(['id_user'=> $id])->all();
         return $this->render('view',
         [
             'user_one'=>$user_one,
             'contents' => $contents,
-            'vacancies' => $vacancies
+            'vacancies' => $vacancies,
+            'products' => $products
         ]
     );
     }
@@ -189,6 +192,20 @@ class SiteController extends Controller
             }
         }
         return $this->render('insert_vacancy', ['model'=>$model]);
+    }
+
+    public function actionSetProduct()
+    {     
+        $model = new Product();
+        if(Yii::$app->request->isPost)
+        {
+            $model->load(Yii::$app->request->post());
+            if($model->saveProduct(Yii::$app->user->id))
+            {
+                return $this->redirect(['view','id'=>Yii::$app->user->id]);
+            }
+        }
+        return $this->render('create_product', ['model'=>$model]);
     }
 
 

@@ -101,6 +101,25 @@ use yii\helpers\Html;
 
                         
                         <?php if($user_one->type == "Відеограф" ||  $user_one->type == "Фотограф" ): ?>
+                        <h1 id="pop_way" align="center">Мої Послуги</h1>
+<div id="products">
+  <!-- <div id="product-1">
+		<ul id="tab_show1">
+			<li><img src="/Київ-Львів.PNG"></li>
+			<li><img src="/Львів-Уж.PNG"></li>
+			<li><img src="/Київ-Одеса.PNG"></li>
+			<li><img src="/Одеса-Львів.PNG"></li>
+		</ul>
+  </div> -->
+  <?php if(Yii::$app->user->id == $user_one->id): ?>
+                                    <?= Html::a('Додати Послугу', ['set-product', 'id' => $user_one->id], ['class' => 'btn btn-default']) ?>
+                                    <?php endif; ?>
+  <?php foreach($products as $product):?>    
+  <h2><?= $product->name_product?></h2>
+  <p><?= $product->price_product?></p>
+
+  <?php endforeach; ?>
+</div>
                         <h2 class="related-products-title">Портфоліо</h2>
                         <div id="tabs">
                                  <ul>
